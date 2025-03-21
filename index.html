@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEXAR "Number Exchange to Arabic Renderer"</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            background: linear-gradient(-45deg, #1e1e2f, #3a3a5f, #6b6b9a, #1e1e2f);
+            background-size: 400% 400%;
+            animation: gradientBG 10s ease infinite;
+            color: white;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+            text-align: center;
+            width: 80%;
+            max-width: 600px;
+        }
+
+        h2 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        textarea {
+            width: 90%;
+            padding: 12px;
+            font-size: 16px;
+            border: none;
+            border-radius: 8px;
+            outline: none;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            resize: vertical;
+            height: 100px;
+        }
+
+        ::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        button {
+            margin-top: 15px;
+            padding: 12px 20px;
+            font-size: 18px;
+            font-weight: bold;
+            color: white;
+            background: linear-gradient(45deg, #ff416c, #ff4b2b);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 0 10px rgba(255, 71, 87, 0.6);
+        }
+
+        button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(255, 71, 87, 1);
+        }
+
+        table {
+            margin-top: 20px;
+            width: 100%;
+            border-collapse: collapse;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        th, td {
+            padding: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        th {
+            background: rgba(255, 255, 255, 0.2);
+            font-weight: bold;
+        }
+
+        td {
+            font-size: 18px;
+        }
+
+        .result-box {
+            margin-top: 20px;
+            font-size: 20px;
+            text-align: right;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>NEXAR</h2>
+        <h2>"Number Exchange to Arabic Renderer"</h2>
+        <textarea id="inputText" placeholder="Masukkan teks arab yang mengandung angka disini"></textarea>
+        <button onclick="convertToArabic()">Konversi</button>
+
+        <div class="result-box">
+            <strong>: الحاصل</strong>  
+            <p id="outputText"></p>
+        </div>
+
+        <table id="resultTable">
+            <thead>
+                <tr>
+                    <th>Angka Asli</th>
+                    <th>Angka Arab</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+    <script>
+        function convertToArabic() {
+            let input = document.getElementById("inputText").value;
+            let arabicNumbers = ["٠", "١", "٢", "٣", "٤", "٥", "٦", "٧", "٨", "٩"];
+            
+            let tableData = [];
+            
+            let convertedText = input.replace(/\d+/g, match => {
+                let arabicNum = match.replace(/\d/g, digit => arabicNumbers[digit]);
+                tableData.push({ original: match, arabic: arabicNum });
+                return arabicNum;
+            });
+			
+            document.getElementById("outputText").innerText = convertedText;
+			
+            let tableBody = document.querySelector("#resultTable tbody");
+            tableBody.innerHTML = ""; 
+
+            tableData.forEach(data => {
+                let row = `<tr><td>${data.original}</td><td>${data.arabic}</td></tr>`;
+                tableBody.innerHTML += row;
+            });
+        }
+    </script>
+
+</body>
+</html>
