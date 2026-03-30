@@ -1,167 +1,242 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NEXAR "Number Exchange to Arabic Renderer"</title>
-    <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-            margin: 0;
-            padding: 0;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            background: linear-gradient(-45deg, #1e1e2f, #3a3a5f, #6b6b9a, #1e1e2f);
-            background-size: 400% 400%;
-            animation: gradientBG 10s ease infinite;
-            color: white;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NEXAR "Number Exchange to Arabic Renderer"</title>
 
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
+<style>
 
-        .container {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 30px;
-            border-radius: 15px;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
-            text-align: center;
-            width: 80%;
-            max-width: 600px;
-        }
+body{
+font-family:'Poppins',sans-serif;
+margin:0;
+padding:10px;
+min-height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+flex-direction:column;
 
-        h2 {
-            font-size: 24px;
-            font-weight: 600;
-            margin-bottom: 20px;
-        }
+background:linear-gradient(-45deg,#1e1e2f,#3a3a5f,#6b6b9a,#1e1e2f);
+background-size:400% 400%;
+animation:gradientBG 10s ease infinite;
 
-        textarea {
-            width: 90%;
-            padding: 12px;
-            font-size: 16px;
-            border: none;
-            border-radius: 8px;
-            outline: none;
-            text-align: center;
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-            resize: vertical;
-            height: 100px;
-        }
+color:white;
+}
 
-        ::placeholder {
-            color: rgba(255, 255, 255, 0.7);
-        }
+@keyframes gradientBG{
+0%{background-position:0% 50%;}
+50%{background-position:100% 50%;}
+100%{background-position:0% 50%;}
+}
 
-        button {
-            margin-top: 15px;
-            padding: 12px 20px;
-            font-size: 18px;
-            font-weight: bold;
-            color: white;
-            background: linear-gradient(45deg, #ff416c, #ff4b2b);
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: 0.3s;
-            box-shadow: 0 0 10px rgba(255, 71, 87, 0.6);
-        }
+.container{
+background:rgba(255,255,255,0.1);
+padding:25px;
+border-radius:15px;
+backdrop-filter:blur(10px);
+box-shadow:0 0 20px rgba(255,255,255,0.2);
+text-align:center;
 
-        button:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 15px rgba(255, 71, 87, 1);
-        }
+width:100%;
+max-width:600px;
+}
 
-        table {
-            margin-top: 20px;
-            width: 100%;
-            border-collapse: collapse;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            overflow: hidden;
-            text-align: center;
-        }
+h2{
+font-size:22px;
+font-weight:600;
+margin-bottom:10px;
+}
 
-        th, td {
-            padding: 12px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-        }
+textarea{
+width:95%;
+padding:12px;
+font-size:16px;
+border:none;
+border-radius:8px;
+outline:none;
+text-align:center;
 
-        th {
-            background: rgba(255, 255, 255, 0.2);
-            font-weight: bold;
-        }
+background:rgba(255,255,255,0.2);
+color:white;
 
-        td {
-            font-size: 18px;
-        }
+resize:vertical;
+min-height:100px;
+}
 
-        .result-box {
-            margin-top: 20px;
-            font-size: 20px;
-            text-align: right;
-            padding: 10px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-        }
-    </style>
+::placeholder{
+color:rgba(255,255,255,0.7);
+}
+
+button{
+margin-top:12px;
+padding:12px 20px;
+font-size:16px;
+font-weight:bold;
+color:white;
+
+background:linear-gradient(45deg,#ff416c,#ff4b2b);
+border:none;
+border-radius:8px;
+cursor:pointer;
+transition:0.3s;
+
+box-shadow:0 0 10px rgba(255,71,87,0.6);
+}
+
+button:hover{
+transform:scale(1.05);
+box-shadow:0 0 15px rgba(255,71,87,1);
+}
+
+.copyBtn{
+background:linear-gradient(45deg,#00c6ff,#0072ff);
+box-shadow:0 0 10px rgba(0,180,255,0.6);
+}
+
+table{
+margin-top:20px;
+width:100%;
+border-collapse:collapse;
+
+background:rgba(255,255,255,0.1);
+border-radius:10px;
+overflow:hidden;
+text-align:center;
+}
+
+th,td{
+padding:10px;
+border-bottom:1px solid rgba(255,255,255,0.2);
+}
+
+th{
+background:rgba(255,255,255,0.2);
+font-weight:bold;
+}
+
+td{
+font-size:18px;
+}
+
+.result-box{
+margin-top:20px;
+font-size:20px;
+text-align:right;
+
+padding:10px;
+background:rgba(255,255,255,0.1);
+border-radius:8px;
+
+word-wrap:break-word;
+}
+
+@media(max-width:480px){
+
+h2{
+font-size:18px;
+}
+
+textarea{
+font-size:15px;
+}
+
+button{
+width:100%;
+}
+
+td{
+font-size:16px;
+}
+
+}
+
+</style>
 </head>
+
 <body>
 
-    <div class="container">
-        <h2>NEXAR</h2>
-        <h2>"Number Exchange to Arabic Renderer"</h2>
-        <textarea id="inputText" placeholder="Masukkan teks arab yang mengandung angka disini"></textarea>
-        <button onclick="convertToArabic()">Konversi</button>
+<div class="container">
 
-        <div class="result-box">
-            <strong>: الحاصل</strong>  
-            <p id="outputText"></p>
-        </div>
+<h2>NEXAR</h2>
+<h2>"Number Exchange to Arabic Renderer"</h2>
 
-        <table id="resultTable">
-            <thead>
-                <tr>
-                    <th>Angka Asli</th>
-                    <th>Angka Arab</th>
-                </tr>
-            </thead>
-            <tbody></tbody>
-        </table>
-    </div>
+<textarea id="inputText" placeholder="Masukkan teks arab yang mengandung angka disini"></textarea>
 
-    <script>
-        function convertToArabic() {
-            let input = document.getElementById("inputText").value;
-            let arabicNumbers = ["٠", "١", "٢", "٣", "٤", "٥", "٦", "٧", "٨", "٩"];
-            
-            let tableData = [];
-            
-            let convertedText = input.replace(/\d+/g, match => {
-                let arabicNum = match.replace(/\d/g, digit => arabicNumbers[digit]);
-                tableData.push({ original: match, arabic: arabicNum });
-                return arabicNum;
-            });
-			
-            document.getElementById("outputText").innerText = convertedText;
-			
-            let tableBody = document.querySelector("#resultTable tbody");
-            tableBody.innerHTML = ""; 
+<br>
 
-            tableData.forEach(data => {
-                let row = `<tr><td>${data.original}</td><td>${data.arabic}</td></tr>`;
-                tableBody.innerHTML += row;
-            });
-        }
-    </script>
+<button onclick="convertToArabic()">Konversi</button>
+
+<button class="copyBtn" onclick="copyResult()">Copy Hasil</button>
+
+<div class="result-box">
+<strong>: الحاصل</strong>
+<p id="outputText"></p>
+</div>
+
+<table id="resultTable">
+<thead>
+<tr>
+<th>Angka Asli</th>
+<th>Angka Arab</th>
+</tr>
+</thead>
+<tbody></tbody>
+</table>
+
+</div>
+
+<script>
+
+function convertToArabic(){
+
+let input=document.getElementById("inputText").value;
+
+let arabicNumbers=["٠","١","٢","٣","٤","٥","٦","٧","٨","٩"];
+
+let tableData=[];
+
+let convertedText=input.replace(/\d+/g,function(match){
+
+let arabicNum=match.replace(/\d/g,function(digit){
+
+return arabicNumbers[digit];
+
+});
+
+tableData.push({original:match,arabic:arabicNum});
+
+return arabicNum;
+
+});
+
+document.getElementById("outputText").innerText=convertedText;
+
+let tableBody=document.querySelector("#resultTable tbody");
+
+tableBody.innerHTML="";
+
+tableData.forEach(function(data){
+
+let row="<tr><td>"+data.original+"</td><td>"+data.arabic+"</td></tr>";
+
+tableBody.innerHTML+=row;
+
+});
+
+}
+
+function copyResult(){
+
+let text=document.getElementById("outputText").innerText;
+
+navigator.clipboard.writeText(text);
+
+alert("Hasil berhasil di copy");
+
+}
+
+</script>
 
 </body>
 </html>
