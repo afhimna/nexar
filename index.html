@@ -3,238 +3,1018 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NEXAR "Number Exchange to Arabic Renderer"</title>
 
+<title>NEXAR — Number Exchange to Arabic Renderer</title>
 <style>
 
+*{
+    box-sizing:border-box;
+}
+html{
+    scroll-behavior:smooth;
+}
 body{
-font-family:'Poppins',sans-serif;
-margin:0;
-padding:10px;
-min-height:100vh;
-display:flex;
-justify-content:center;
-align-items:center;
-flex-direction:column;
-
-background:linear-gradient(-45deg,#1e1e2f,#3a3a5f,#6b6b9a,#1e1e2f);
-background-size:400% 400%;
-animation:gradientBG 10s ease infinite;
-
-color:white;
+    margin:0;
+    min-height:100vh;
+    padding:20px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-family:
+        "Poppins",
+        "Segoe UI",
+        Arial,
+        sans-serif;
+    color:#fff;
+    background:
+        linear-gradient(
+            -45deg,
+            #151525,
+            #24244a,
+            #3c3c70,
+            #17172d
+        );
+    background-size:400% 400%;
+    animation:gradientBG 12s ease infinite;
 }
 
 @keyframes gradientBG{
-0%{background-position:0% 50%;}
-50%{background-position:100% 50%;}
-100%{background-position:0% 50%;}
+    0%{
+        background-position:0% 50%;
+    }
+    50%{
+        background-position:100% 50%;
+    }
+    100%{
+        background-position:0% 50%;
+    }
 }
 
 .container{
-background:rgba(255,255,255,0.1);
-padding:25px;
-border-radius:15px;
-backdrop-filter:blur(10px);
-box-shadow:0 0 20px rgba(255,255,255,0.2);
-text-align:center;
-
-width:100%;
-max-width:600px;
+    width:100%;
+    max-width:720px;
+    padding:28px;
+    border:1px solid rgba(255,255,255,.15);
+    border-radius:20px;
+    background:rgba(255,255,255,.08);
+    backdrop-filter:blur(15px);
+    -webkit-backdrop-filter:blur(15px);
+    box-shadow:
+        0 20px 60px rgba(0,0,0,.3);
 }
 
-h2{
-font-size:22px;
-font-weight:600;
-margin-bottom:10px;
+.header{
+    text-align:center;
+    margin-bottom:24px;
 }
+.logo{
+    margin:0;
+    font-size:32px;
+    font-weight:800;
+    letter-spacing:3px;
+    background:
+        linear-gradient(
+            90deg,
+            #fff,
+            #9bdcff
+        );
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+}
+
+.subtitle{
+    margin:5px 0 0;
+    font-size:13px;
+    color:rgba(255,255,255,.65);
+}
+
+.label{
+    display:block;
+    margin-bottom:8px;
+    font-size:14px;
+    font-weight:600;
+    color:rgba(255,255,255,.85);
+}
+
 
 textarea{
-width:95%;
-padding:12px;
-font-size:16px;
-border:none;
-border-radius:8px;
-outline:none;
-text-align:center;
-
-background:rgba(255,255,255,0.2);
-color:white;
-
-resize:vertical;
-min-height:100px;
+    display:block;
+    width:100%;
+    min-height:150px;
+    padding:15px;
+    border:1px solid rgba(255,255,255,.15);
+    border-radius:12px;
+    outline:none;
+    resize:none;
+    background:rgba(0,0,0,.15);
+    color:#fff;
+    font-size:17px;
+    line-height:1.8;
+    direction:rtl;
+    text-align:right;
+    transition:.25s;
 }
 
-::placeholder{
-color:rgba(255,255,255,0.7);
+textarea::placeholder{
+    color:rgba(255,255,255,.4);
+}
+
+textarea:focus{
+    border-color:rgba(120,210,255,.7);
+    background:rgba(0,0,0,.22);
+    box-shadow:
+        0 0 0 3px rgba(0,180,255,.1);
+}
+
+.buttons{
+    display:grid;
+    grid-template-columns:
+        repeat(3,1fr);
+    gap:10px;
+    margin-top:14px;
 }
 
 button{
-margin-top:12px;
-padding:12px 20px;
-font-size:16px;
-font-weight:bold;
-color:white;
-
-background:linear-gradient(45deg,#ff416c,#ff4b2b);
-border:none;
-border-radius:8px;
-cursor:pointer;
-transition:0.3s;
-
-box-shadow:0 0 10px rgba(255,71,87,0.6);
+    min-height:46px;
+    border:none;
+    border-radius:10px;
+    color:#fff;
+    font-size:14px;
+    font-weight:700;
+    cursor:pointer;
+    transition:
+        transform .2s,
+        box-shadow .2s,
+        opacity .2s;
 }
-
 button:hover{
-transform:scale(1.05);
-box-shadow:0 0 15px rgba(255,71,87,1);
+    transform:translateY(-2px);
+}
+button:active{
+    transform:scale(.97);
+}
+button:disabled{
+    opacity:.5;
+    cursor:not-allowed;
+    transform:none;
 }
 
-.copyBtn{
-background:linear-gradient(45deg,#00c6ff,#0072ff);
-box-shadow:0 0 10px rgba(0,180,255,0.6);
+/* CONVERT */
+
+.convert-btn{
+
+    background:
+        linear-gradient(
+            135deg,
+            #ff416c,
+            #ff4b2b
+        );
+    box-shadow:
+        0 6px 20px rgba(255,65,108,.25);
+
+}
+
+.copy-btn{
+    background:
+        linear-gradient(
+            135deg,
+            #00c6ff,
+            #0072ff
+        );
+    box-shadow:
+        0 6px 20px rgba(0,114,255,.25);
+}
+
+
+.reset-btn{
+    background:
+        rgba(255,255,255,.12);
+    border:
+        1px solid rgba(255,255,255,.15);
+}
+
+
+.status{
+    min-height:22px;
+    margin-top:12px;
+    text-align:center;
+    font-size:13px;
+    color:rgba(255,255,255,.65);
+}
+
+
+.result-section{
+    margin-top:24px;
+}
+
+.result-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+    margin-bottom:8px;
+}
+
+.result-title{
+    margin:0;
+    font-size:15px;
+    font-weight:700;
+}
+
+.counter{
+    padding:4px 9px;
+    border-radius:20px;
+    background:rgba(255,255,255,.1);
+    font-size:12px;
+    color:rgba(255,255,255,.7);
+}
+
+
+.result-box{
+    min-height:100px;
+    padding:18px;
+    border-radius:12px;
+    border:1px solid rgba(255,255,255,.1);
+    background:rgba(0,0,0,.15);
+    direction:rtl;
+    text-align:right;
+    font-family:
+        "Amiri",
+        "Scheherazade New",
+        "Times New Roman",
+        serif;
+    font-size:23px;
+    line-height:2;
+    word-break:break-word;
+    white-space:pre-wrap;
+}
+
+.result-empty{
+    color:rgba(255,255,255,.35);
+    font-family:
+        "Poppins",
+        "Segoe UI",
+        Arial,
+        sans-serif;
+    font-size:14px;
+    text-align:center;
+}
+
+
+.table-wrapper{
+    margin-top:20px;
+    overflow-x:auto;
+    border-radius:12px;
+    border:1px solid rgba(255,255,255,.1);
 }
 
 table{
-margin-top:20px;
-width:100%;
-border-collapse:collapse;
-
-background:rgba(255,255,255,0.1);
-border-radius:10px;
-overflow:hidden;
-text-align:center;
+    width:100%;
+    border-collapse:collapse;
+    min-width:350px;
 }
 
-th,td{
-padding:10px;
-border-bottom:1px solid rgba(255,255,255,0.2);
+th,
+td{
+    padding:12px;
+    text-align:center;
+    border-bottom:
+        1px solid rgba(255,255,255,.08);
 }
 
 th{
-background:rgba(255,255,255,0.2);
-font-weight:bold;
+    background:
+        rgba(255,255,255,.1);
+    font-size:13px;
 }
 
 td{
-font-size:18px;
+    font-size:16px;
 }
 
-.result-box{
-margin-top:20px;
-font-size:20px;
-text-align:right;
-
-padding:10px;
-background:rgba(255,255,255,0.1);
-border-radius:8px;
-
-word-wrap:break-word;
+td.arabic{
+    font-family:
+        "Amiri",
+        "Scheherazade New",
+        serif;
+    font-size:21px;
 }
 
-@media(max-width:480px){
-
-h2{
-font-size:18px;
+tbody tr:last-child td{
+    border-bottom:none;
 }
 
-textarea{
-font-size:15px;
+tbody tr:hover{
+    background:
+        rgba(255,255,255,.05);
 }
 
-button{
-width:100%;
+
+.hidden{
+    display:none !important;
 }
 
-td{
-font-size:16px;
+.footer{
+    margin-top:20px;
+    text-align:center;
+    font-size:11px;
+    color:rgba(255,255,255,.35);
 }
 
+@media(max-width:600px){
+    body{
+        padding:12px;
+        align-items:flex-start;
+    }
+    .container{
+        margin-top:10px;
+        padding:20px;
+        border-radius:16px;
+    }
+    .logo{
+        font-size:27px;
+    }
+    .subtitle{
+        font-size:11px;
+    }
+    textarea{
+        min-height:130px;
+        font-size:16px;
+    }
+    .buttons{
+        grid-template-columns:1fr;
+    }
+    button{
+        width:100%;
+    }
+    .result-box{
+        font-size:21px;
+    }
+}
+
+@media(max-width:360px){
+    .container{
+        padding:15px;
+    }
+    .logo{
+        font-size:24px;
+    }
+    .result-box{
+        font-size:19px;
+    }
 }
 
 </style>
 </head>
 
+
 <body>
 
+
 <div class="container">
+    <!-- HEADER -->
+    <div class="header">
+        <h1 class="logo">
+            NEXAR
+        </h1>
+        <p class="subtitle">
+            Number Exchange to Arabic Renderer
+        </p>
+    </div>
 
-<h2>NEXAR</h2>
-<h2>"Number Exchange to Arabic Renderer"</h2>
+    <!-- INPUT -->
+    <label
+        class="label"
+        for="inputText"
+    >
+        Teks Arab
+    </label>
+    <textarea
+        id="inputText"
+        dir="rtl"
+        spellcheck="false"
+        autocomplete="off"
+        placeholder="Masukkan teks Arab yang mengandung angka..."
+    ></textarea>
 
-<textarea id="inputText" placeholder="Masukkan teks arab yang mengandung angka disini"></textarea>
+    <!-- BUTTONS -->
+    <div class="buttons">
 
-<br>
+        <button
+            type="button"
+            class="convert-btn"
+            id="convertBtn"
+        >
+            Konversi
+        </button>
 
-<button onclick="convertToArabic()">Konversi</button>
+        <button
+            type="button"
+            class="copy-btn"
+            id="copyBtn"
+            disabled
+        >
+            Copy Hasil
+        </button>
 
-<button class="copyBtn" onclick="copyResult()">Copy Hasil</button>
+        <button
+            type="button"
+            class="reset-btn"
+            id="resetBtn"
+        >
+            Reset
+        </button>
 
-<div class="result-box">
-<strong>: الحاصل</strong>
-<p id="outputText"></p>
+    </div>
+
+
+    <!-- STATUS -->
+
+    <div
+        id="status"
+        class="status"
+        aria-live="polite"
+    ></div>
+
+
+    <!-- RESULT -->
+
+    <div class="result-section">
+
+        <div class="result-header">
+
+            <h2 class="result-title">
+                الحاصل
+            </h2>
+
+            <span
+                id="counter"
+                class="counter"
+            >
+                0 angka
+            </span>
+
+        </div>
+
+
+        <div
+            id="resultBox"
+            class="result-box result-empty"
+        >
+            Hasil konversi akan muncul di sini
+        </div>
+
+    </div>
+
+
+    <!-- TABLE -->
+
+    <div
+        id="tableSection"
+        class="table-wrapper hidden"
+    >
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        Angka Asli
+                    </th>
+
+                    <th>
+                        Angka Arab
+                    </th>
+
+                </tr>
+
+            </thead>
+
+            <tbody id="resultTableBody">
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+    <div class="footer">
+        NEXAR • Number Exchange to Arabic Renderer
+    </div>
+
 </div>
 
-<table id="resultTable">
-<thead>
-<tr>
-<th>Angka Asli</th>
-<th>Angka Arab</th>
-</tr>
-</thead>
-<tbody></tbody>
-</table>
-
-</div>
 
 <script>
 
+/* =====================================================
+   NEXAR
+   Number Exchange to Arabic Renderer
+===================================================== */
+
+
+/* =====================================================
+   ELEMENT
+===================================================== */
+
+const inputText =
+    document.getElementById("inputText");
+
+const convertBtn =
+    document.getElementById("convertBtn");
+
+const copyBtn =
+    document.getElementById("copyBtn");
+
+const resetBtn =
+    document.getElementById("resetBtn");
+
+const resultBox =
+    document.getElementById("resultBox");
+
+const tableSection =
+    document.getElementById("tableSection");
+
+const tableBody =
+    document.getElementById("resultTableBody");
+
+const counter =
+    document.getElementById("counter");
+
+const status =
+    document.getElementById("status");
+
+
+/* =====================================================
+   ANGKA
+===================================================== */
+
+const arabicNumbers = [
+    "٠",
+    "١",
+    "٢",
+    "٣",
+    "٤",
+    "٥",
+    "٦",
+    "٧",
+    "٨",
+    "٩"
+];
+
+
+/* =====================================================
+   KONVERSI SATU ANGKA
+===================================================== */
+
+function convertNumber(number){
+
+    return number.replace(
+        /\d/g,
+        function(digit){
+
+            return arabicNumbers[
+                Number(digit)
+            ];
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   FORMAT STATUS
+===================================================== */
+
+function setStatus(message){
+
+    status.textContent = message;
+
+}
+
+
+/* =====================================================
+   KONVERSI UTAMA
+===================================================== */
+
 function convertToArabic(){
 
-let input=document.getElementById("inputText").value;
+    const input =
+    inputText.value.replace(/\r\n/g, "\n");
 
-let arabicNumbers=["٠","١","٢","٣","٤","٥","٦","٧","٨","٩"];
+    /* INPUT KOSONG */
 
-let tableData=[];
+    if(!input.trim()){
 
-let convertedText=input.replace(/\d+/g,function(match){
+        resultBox.textContent =
+            "Masukkan teks terlebih dahulu.";
 
-let arabicNum=match.replace(/\d/g,function(digit){
+        resultBox.classList.add(
+            "result-empty"
+        );
 
-return arabicNumbers[digit];
+        tableSection.classList.add(
+            "hidden"
+        );
 
-});
+        copyBtn.disabled = true;
 
-tableData.push({original:match,arabic:arabicNum});
+        counter.textContent =
+            "0 angka";
 
-return arabicNum;
+        setStatus(
+            "Belum ada teks untuk dikonversi."
+        );
 
-});
+        return;
 
-document.getElementById("outputText").innerText=convertedText;
+    }
 
-let tableBody=document.querySelector("#resultTable tbody");
 
-tableBody.innerHTML="";
+    let count = 0;
 
-tableData.forEach(function(data){
+    const tableData = [];
 
-let row="<tr><td>"+data.original+"</td><td>"+data.arabic+"</td></tr>";
 
-tableBody.innerHTML+=row;
+    /* =================================================
+       KONVERSI ANGKA
+    ================================================= */
 
-});
+    const convertedText =
+        input.replace(
+            /\d+(?:[.,]\d+)?/g,
+            function(match){
+
+                count++;
+
+                const arabicNum =
+                    convertNumber(match);
+
+                tableData.push({
+                    original:match,
+                    arabic:arabicNum
+                });
+
+                return arabicNum;
+
+            }
+        );
+
+
+    /* =================================================
+       TAMPILKAN HASIL
+    ================================================= */
+
+    resultBox.textContent =
+        convertedText;
+
+    resultBox.classList.remove(
+        "result-empty"
+    );
+
+
+    /* =================================================
+       COUNTER
+    ================================================= */
+
+    counter.textContent =
+        count +
+        (count === 1
+            ? " angka"
+            : " angka");
+
+
+    /* =================================================
+       TABLE
+    ================================================= */
+
+    tableBody.textContent = "";
+
+
+    if(tableData.length > 0){
+
+        tableSection.classList.remove(
+            "hidden"
+        );
+
+
+        tableData.forEach(
+            function(data){
+
+                const row =
+                    document.createElement("tr");
+
+
+                const originalCell =
+                    document.createElement("td");
+
+                const arabicCell =
+                    document.createElement("td");
+
+
+                originalCell.textContent =
+                    data.original;
+
+                arabicCell.textContent =
+                    data.arabic;
+
+
+                arabicCell.classList.add(
+                    "arabic"
+                );
+
+
+                row.appendChild(
+                    originalCell
+                );
+
+                row.appendChild(
+                    arabicCell
+                );
+
+
+                tableBody.appendChild(
+                    row
+                );
+
+            }
+        );
+
+
+        copyBtn.disabled = false;
+
+
+        setStatus(
+            "Konversi berhasil."
+        );
+
+    }
+
+    else{
+
+        tableSection.classList.add(
+            "hidden"
+        );
+
+        copyBtn.disabled = false;
+
+        setStatus(
+            "Tidak ditemukan angka Latin. Teks tetap ditampilkan."
+        );
+
+    }
 
 }
 
-function copyResult(){
 
-let text=document.getElementById("outputText").innerText;
+/* =====================================================
+   COPY HASIL
+===================================================== */
 
-navigator.clipboard.writeText(text);
+async function copyResult(){
 
-alert("Hasil berhasil di copy");
+    const text =
+        resultBox.textContent;
+
+    if(
+        !text ||
+        resultBox.classList.contains(
+            "result-empty"
+        )
+    ){
+
+        setStatus(
+            "Belum ada hasil untuk disalin."
+        );
+
+        return;
+
+    }
+
+
+    /* =================================================
+       CLIPBOARD API
+    ================================================= */
+
+    try{
+
+        if(
+            navigator.clipboard &&
+            window.isSecureContext
+        ){
+
+            await navigator.clipboard.writeText(
+                text
+            );
+
+        }
+
+        else{
+
+            fallbackCopy(text);
+
+        }
+
+
+        setStatus(
+            "✓ Hasil berhasil disalin."
+        );
+
+
+        const originalText =
+            copyBtn.textContent;
+
+        copyBtn.textContent =
+            "✓ Tersalin";
+
+
+        setTimeout(
+            function(){
+
+                copyBtn.textContent =
+                    originalText;
+
+            },
+            1500
+        );
+
+    }
+
+    catch(error){
+
+        setStatus(
+            "Gagal menyalin. Silakan salin secara manual."
+        );
+
+    }
 
 }
+
+
+/* =====================================================
+   FALLBACK COPY
+===================================================== */
+
+function fallbackCopy(text){
+
+    const temp =
+        document.createElement(
+            "textarea"
+        );
+
+    temp.value = text;
+
+    temp.style.position =
+        "fixed";
+
+    temp.style.opacity =
+        "0";
+
+    temp.style.pointerEvents =
+        "none";
+
+    document.body.appendChild(
+        temp
+    );
+
+    temp.focus();
+
+    temp.select();
+
+    const success =
+        document.execCommand(
+            "copy"
+        );
+
+    document.body.removeChild(
+        temp
+    );
+
+
+    if(!success){
+
+        throw new Error(
+            "Copy gagal"
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   RESET
+===================================================== */
+
+function resetNexar(){
+
+    inputText.value = "";
+
+    resultBox.textContent =
+        "Hasil konversi akan muncul di sini";
+
+    resultBox.classList.add(
+        "result-empty"
+    );
+
+    tableBody.textContent = "";
+
+    tableSection.classList.add(
+        "hidden"
+    );
+
+    copyBtn.disabled = true;
+
+    counter.textContent =
+        "0 angka";
+
+    setStatus(
+        ""
+    );
+
+    inputText.focus();
+
+}
+
+
+/* =====================================================
+   EVENT
+===================================================== */
+
+convertBtn.addEventListener(
+    "click",
+    convertToArabic
+);
+
+
+copyBtn.addEventListener(
+    "click",
+    copyResult
+);
+
+
+resetBtn.addEventListener(
+    "click",
+    resetNexar
+);
+
+
+/* =====================================================
+   CTRL + ENTER
+   Untuk konversi cepat
+===================================================== */
+
+inputText.addEventListener(
+    "keydown",
+    function(event){
+
+        if(
+            event.ctrlKey &&
+            event.key === "Enter"
+        ){
+
+            event.preventDefault();
+
+            convertToArabic();
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   AUTO RESET STATUS SAAT MENGETIK
+===================================================== */
+
+inputText.addEventListener(
+    "input",
+    function(){
+
+        if(
+            inputText.value.trim() === ""
+        ){
+
+            counter.textContent =
+                "0 angka";
+
+        }
+
+        setStatus("");
+
+    }
+);
+
+
+/* =====================================================
+   INITIAL STATE
+===================================================== */
+
+resetNexar();
 
 </script>
 
